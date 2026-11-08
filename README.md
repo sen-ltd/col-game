@@ -63,3 +63,10 @@ What the numbers say:
 ## License
 
 MIT © 2026 SEN LLC
+
+<!-- sen-publish:links -->
+## Links
+
+- 🌐 Demo: https://sen.ltd/portfolio/col-game/
+- 📝 記事: https://qiita.com/sen-ltd/items/6419b89ad4cc763c2310
+<!-- /sen-publish:links -->
