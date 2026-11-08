@@ -1,0 +1,20 @@
+{
+ "colPlain": {
+  "checked": 18037,
+  "bad": 0
+ },
+ "myopicPlain": {
+  "checked": 333540,
+  "bad": 0
+ },
+ "lemma": {
+  "n": 400,
+  "bad": 0
+ },
+ "corollary": {
+  "paths": 2391483,
+  "forests": 2336130,
+  "bad": 0
+ },
+ "sec": 97.331
+}

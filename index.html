@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Col and Myopic Col — exact values</title>
+    <meta
+      name="description"
+      content="Col (Conway's map-colouring game) and Myopic Col (its directed cousin on linked lists and binary trees) in the browser, with an exact combinatorial-game-theory engine: every position gets its canonical value and every move is marked winning or losing. The path lemma of Bovee–Burke–Tennenhouse (2016) is checked and their binary-tree conjecture is tested on 31 million positions."
+    />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23141518'/%3E%3Cline x1='9' y1='16' x2='23' y2='16' stroke='%235b606a' stroke-width='3'/%3E%3Ccircle cx='9' cy='16' r='6' fill='%234f8cff'/%3E%3Ccircle cx='23' cy='16' r='6' fill='%23ef5b6b' fill-opacity='.35' stroke='%23ef5b6b' stroke-width='2'/%3E%3C/svg%3E"
+    />
+  </head>
+  <body>
+    <main>
+      <header>
+        <h1>Col <span>and its myopic cousin</span></h1>
+        <p class="sub">
+          <strong class="blue-t">Blue</strong> (Left) and <strong class="red-t">Red</strong> (Right) take turns colouring
+          a vertex. You may not colour a vertex next to one of <em>your own</em> colour. Whoever cannot move loses. In
+          <strong>Col</strong> a vertex looks at all its neighbours; in <strong>Myopic Col</strong> the board is a
+          linked list or a binary tree and a node looks only along its arrows, at its children. Every position has an
+          exact value, always a number or a number plus * (cold). A node nobody looks at, whose children are
+          uncoloured, is <strong>ringed</strong>: it splits off as a lone *, which is the 2016 conjecture on binary trees
+          and, as measured here, much more. With hints on, every legal move is marked
+          <strong class="win-t">✓</strong> (keeps the win) or <strong class="lose-t">✗</strong>.
+        </p>
+      </header>
+
+      <div id="wrap">
+        <div class="stage">
+          <div class="controls">
+            <label class="sel">board <select id="presetSel"></select></label>
+            <label class="sel">you play
+              <select id="youSel">
+                <option value="blue">Blue</option>
+                <option value="red">Red</option>
+                <option value="both">both sides</option>
+              </select>
+            </label>
+            <label class="sel">first
+              <select id="firstSel">
+                <option value="blue">Blue</option>
+                <option value="red">Red</option>
+              </select>
+            </label>
+            <label class="sel chk"><input type="checkbox" id="hints" checked /> hints</label>
+            <button id="undo">Undo</button>
+            <button id="restart">Restart</button>
+          </div>
+          <div id="boardwrap"><svg id="board" role="img" aria-label="Col board"></svg></div>
+          <div id="status" aria-live="polite"></div>
+        </div>
+        <div class="side">
+          <h3>value of the position</h3>
+          <div class="panel" id="value"></div>
+          <h3>components</h3>
+          <div class="panel" id="groups"></div>
+        </div>
+      </div>
+
+      <section class="notes">
+        <h2>How the values are computed</h2>
+        <p>
+          Both games are one structure: each vertex lists the vertices it <em>looks at</em> and may not take a colour
+          one of them has. A coloured vertex leaves the game and forbids its colour on everyone looking at it; a vertex
+          with no colour left is dead, and an arc whose ends no longer share an allowed colour is dropped. What is left
+          falls apart into components, the game is their <em>sum</em>, and each component is valued once from its
+          options and reduced to <em>canonical form</em> (trees are keyed up to isomorphism).
+        </p>
+        <h2>Checked against the literature</h2>
+        <p>
+          M. Bovee, K. Burke and C. Tennenhouse, <em>Games from Basic Data Structures</em> (arXiv 1605.06327) introduce Myopic Col. Their lemma
+          on lists (n·*, (n−1)·* ∓ 1) holds for n ≤ 400 and their a·* + b − c formula on every colouring of lists up to
+          13 nodes and of list forests up to 9. Their conjecture, G(T) = * + G(T₁) + G(T₂) when the root and its two
+          children are uncoloured, holds on all 1,883,902 cases among the 31,469,089 positions of binary trees with up to 11 nodes; the same split
+          holds for roots with one or many children and for any vertex of any digraph that nobody looks at. Conway's
+          theorem that Col is cold is checked on every colouring of every connected graph up to 8 vertices, and Myopic
+          Col turns out cold everywhere it was measured too.
+        </p>
+      </section>
+
+      <footer>
+        <p>
+          Built by <a href="https://sen.ltd/">SEN LLC</a>. TypeScript, no runtime
+          dependencies. <a href="https://github.com/sen-ltd/col-game">Source</a>.
+        </p>
+      </footer>
+    </main>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
